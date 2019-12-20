@@ -1,0 +1,313 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 2.0.1
+      author: enver
+      comment: insert_user
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: Admin
+              - column:
+                  name: first_name
+                  value: Ivan
+              - column:
+                  name: last_name
+                  value: Ivanov
+              - column:
+                  name: password
+                  value: $2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG
+              - column:
+                  name: salary
+                  value: 1000.00
+              - column:
+                  name: birthday
+                  value: "2000-01-01"
+              - column:
+                  name: hired_day
+                  value: "2015-02-02"
+              - column:
+                  name: status
+                  value: "HIRED"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: Moderator
+              - column:
+                  name: first_name
+                  value: Petr
+              - column:
+                  name: last_name
+                  value: Petrov
+              - column:
+                  name: password
+                  value: 54321
+              - column:
+                  name: salary
+                  value: 2500.00
+              - column:
+                  name: birthday
+                  value: "1990-05-05"
+              - column:
+                  name: hired_day
+                  value: "2011-04-04"
+              - column:
+                  name: status
+                  value: "HIRED"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: User
+              - column:
+                  name: first_name
+                  value: Sidr
+              - column:
+                  name: last_name
+                  value: Sidorov
+              - column:
+                  name: password
+                  value: 159753
+              - column:
+                  name: salary
+                  value: 850.00
+              - column:
+                  name: birthday
+                  value: "2005-06-06"
+              - column:
+                  name: hired_day
+                  value: "2018-07-07"
+              - column:
+                  name: status
+                  value: "HIRED"
+  - changeSet:
+      id: 2.0.2
+      author: enver
+      comment: insert_role
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: MODERATOR
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: USER
+  - changeSet:
+      id: 2.0.3
+      author: enver
+      comment: insert_department
+      changes:
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Probation
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Marketing
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Finance
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Operations management
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Human Resource
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: IT
+  - changeSet:
+      id: 2.0.4
+      author: enver
+      comment: insert_positions
+      changes:
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Software engineer
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Systems analyst
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Business analyst
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Web developer
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Network engineer
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Java developer
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: name
+                  value: Software tester
+  - changeSet:
+      id: 2.0.5
+      author: enver
+      comment: insert_user_roles
+      changes:
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: role_id
+                  value: 2
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 3
+              - column:
+                  name: role_id
+                  value: 3
+  - changeSet:
+      id: 2.0.6
+      author: enver
+      comment: insert_department_users
+      changes:
+        - insert:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: 1
+        - insert:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  value: 2
+              - column:
+                  name: user_id
+                  value: 2
+        - insert:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  value: 3
+              - column:
+                  name: user_id
+                  value: 2
+        - insert:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  value: 4
+              - column:
+                  name: user_id
+                  value: 3
+        - insert:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  value: 5
+              - column:
+                  name: user_id
+                  value: 3
+  - changeSet:
+      id: 2.0.7
+      author: enver
+      comment: insert_user_positions
+      changes:
+        - insert:
+            tableName: user_positions
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: position_id
+                  value: 7
+        - insert:
+            tableName: user_positions
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: position_id
+                  value: 2
+        - insert:
+            tableName: user_positions
+            columns:
+              - column:
+                  name: user_id
+                  value: 3
+              - column:
+                  name: position_id
+                  value: 3

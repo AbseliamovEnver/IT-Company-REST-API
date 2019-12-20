@@ -1,0 +1,197 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 1.0.1
+      author: enver
+      comment: create_table_users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: salary
+                  type: decimal(7,2)
+                  defaultValue: 0.00
+                  constraints:
+                    nullable: false
+              - column:
+                  name: birthday
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: hired_day
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1.0.2
+      author: enver
+      comment: create_table_roles
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1.0.3
+      author: enver
+      comment: create_table_departments
+      changes:
+        - createTable:
+            tableName: departments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1.0.4
+      author: enver
+      comment: create_table_positions
+      changes:
+        - createTable:
+            tableName: positions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1.0.5
+      author: enver
+      comment: create_table_user_roles
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_user_roles_user_id
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_user_roles_role_id
+                    referencedTableName: roles
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
+  - changeSet:
+      id: 1.0.6
+      author: enver
+      comment: create_table_department_users
+      changes:
+        - createTable:
+            tableName: department_users
+            columns:
+              - column:
+                  name: department_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_department_users_department_id
+                    referencedTableName: departments
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_department_users_user_id
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
+  - changeSet:
+      id: 1.0.7
+      author: enver
+      comment: create_table_user_positions
+      changes:
+        - createTable:
+            tableName: user_positions
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_user_positions_user_id
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
+              - column:
+                  name: position_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_user_positions_position_id
+                    referencedTableName: positions
+                    referencedColumnNames: id
+                    nullable: false
+                    onDelete: CASCADE
