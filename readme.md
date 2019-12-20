@@ -9,3 +9,5 @@
 6. Slf4j
 7. HTTP
 8. Lombok
+
+[![Build Status](https://travis-ci.org/AbseliamovEnver/IT-Company-REST-API.svg?branch=master)](https://travis-ci.org/AbseliamovEnver/IT-Company-REST-API)
