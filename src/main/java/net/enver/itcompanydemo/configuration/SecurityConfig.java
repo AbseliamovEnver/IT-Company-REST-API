@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
+    private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String MODERATOR_ENDPOINT = "/api/v1/moderator/**";
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";

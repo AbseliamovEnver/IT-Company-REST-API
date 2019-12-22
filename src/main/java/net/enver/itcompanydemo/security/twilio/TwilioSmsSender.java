@@ -38,14 +38,14 @@ public class TwilioSmsSender implements SmsSender {
     }
 
     private boolean isPhoneNumberValid(String phoneNumber) {
-        Pattern pattern = Pattern.compile("\\d{2}-\\d{3}-\\d{7}");
+        Pattern pattern = Pattern.compile("\\+\\d{2}-\\d{3}-\\d{7}");
         Matcher matcher = pattern.matcher(phoneNumber);
 
         if (matcher.matches()) {
             log.info("Phone number is valid");
             return true;
         } else {
-            log.info("Phone Number must be in the form XX-XXX-XXXXXXX");
+            log.info("Phone Number must be in the form +XX-XXX-XXXXXXX");
             return false;
         }
     }

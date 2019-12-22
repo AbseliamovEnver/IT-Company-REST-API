@@ -63,7 +63,7 @@ public class AuthenticationRestControllerV1 {
         }
     }
 
-    @PostMapping("rest/twilio")
+    @PostMapping("twilio")
     public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
         twilioService.sendSms(smsRequest);
     }
