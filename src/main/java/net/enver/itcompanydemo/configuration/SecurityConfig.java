@@ -19,9 +19,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
-    private static final String USER_ENDPOINT = "/api/v1/users/***";
-    private static final String MODERATOR_ENDPOINT = "/api/v1/moderator/***";
-    private static final String ADMIN_ENDPOINT = "/api/v1/admin/***";
+    private static final String USER_ENDPOINT = "/api/v1/users/**";
+    private static final String MODERATOR_ENDPOINT = "/api/v1/moderator/**";
+    private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
 
     private final JwtUtil jwtUtil;
 
@@ -45,14 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
+                    .antMatchers(USER_ENDPOINT).authenticated()
                     .antMatchers(MODERATOR_ENDPOINT).hasAnyRole("MODERATOR", "ADMIN")
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .antMatchers(USER_ENDPOINT).authenticated()
-                .anyRequest().authenticated()
+                    .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                    .anyRequest().authenticated()
                 .and()
                     .apply(new JwtConfigurer(jwtUtil));
         http.headers().cacheControl();
     }
-
-
 }
