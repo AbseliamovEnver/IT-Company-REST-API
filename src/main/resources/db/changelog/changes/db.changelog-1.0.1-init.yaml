@@ -46,7 +46,7 @@ databaseChangeLog:
                   value: Petrov
               - column:
                   name: password
-                  value: 54321
+                  value: $2y$12$PQds9bt1c3rv/KHzSnLBnet7khQOvOEFl2Rx8hZBpViZPBWMelVrG
               - column:
                   name: salary
                   value: 2500.00
@@ -73,7 +73,7 @@ databaseChangeLog:
                   value: Sidorov
               - column:
                   name: password
-                  value: 159753
+                  value: $2y$12$EkDcyaxQSkcrqYIoenUeceMq6BSsF.VrMhH.TJ3Ng/cVZ9ft3JQtm
               - column:
                   name: salary
                   value: 850.00
@@ -96,19 +96,19 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
-                  value: ADMIN
+                  value: ROLE_ADMIN
         - insert:
             tableName: roles
             columns:
               - column:
                   name: name
-                  value: MODERATOR
+                  value: ROLE_MODERATOR
         - insert:
             tableName: roles
             columns:
               - column:
                   name: name
-                  value: USER
+                  value: ROLE_USER
   - changeSet:
       id: 2.0.3
       author: enver
