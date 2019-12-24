@@ -10,6 +10,6 @@ public class TestRestController {
 
     @GetMapping("")
     public String helloHeroku(){
-        return "This is test string for heroku";
+        return "This is test string for heroku.";
     }
 }
