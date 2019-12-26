@@ -10,9 +10,6 @@ import java.util.Set;
 
 /**
  * Simple JavaBean object that represent work position of {@link User}.
- *
- * @author Enver on 16.12.2019 21:02.
- * @project ITCompanyDemo
  */
 
 @Entity

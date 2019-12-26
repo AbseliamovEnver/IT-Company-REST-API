@@ -11,9 +11,6 @@ import java.util.Set;
 
 /**
  * Simple JavaBean domain object that represent Department
- *
- * @author Enver on 12.12.2019 14:47.
- * @project ITCompanyDemo
  */
 
 @Entity
@@ -31,7 +28,4 @@ public class Department extends BaseEntity {
     @JsonBackReference
     @EqualsAndHashCode.Exclude
     private Set<User> users;
-
-    public Department() {
-    }
 }

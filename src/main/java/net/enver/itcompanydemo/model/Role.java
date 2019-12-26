@@ -10,9 +10,6 @@ import java.util.Set;
 
 /**
  * Simple JavaBean object that represent role of {@link User}.
- *
- * @author Enver on 12.12.2019 14:25.
- * @project ITCompanyDemo
  */
 
 @Entity

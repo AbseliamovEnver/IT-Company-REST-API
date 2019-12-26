@@ -16,6 +16,7 @@ public class JwtUser {
     private String firstName;
     private String lastName;
     private String password;
+    private String phoneNumber;
     private BigDecimal salary;
     private Date birthday;
     private Date hiredDay;

@@ -11,9 +11,6 @@ import java.util.Set;
 
 /**
  * Simple JavaBean domain object that represent User
- *
- * @author Enver
- * @project ITCompanyDemo
  */
 
 @Entity
@@ -22,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends BaseEntity {
@@ -40,6 +38,9 @@ public class User extends BaseEntity {
 
     @Transient
     private String confirmPassword;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "salary")
     private BigDecimal salary;

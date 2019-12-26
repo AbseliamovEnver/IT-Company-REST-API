@@ -9,9 +9,6 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Base class with property ID
- *
- * @author Enver on 12.12.2019 14:13.
- * @project ITCompanyDemo
  */
 
 @MappedSuperclass
