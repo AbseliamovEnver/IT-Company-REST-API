@@ -122,6 +122,8 @@ public class UserServiceImpl implements UserService {
             }
             updatedUser.setPositions(userPositions);
         }
+        userRepository.save(updatedUser);
+        log.info("In UserServiceImpl method update: {} successfully updated", updatedUser);
     }
 
     @Override

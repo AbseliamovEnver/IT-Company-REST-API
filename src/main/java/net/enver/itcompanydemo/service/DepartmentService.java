@@ -8,6 +8,8 @@ public interface DepartmentService {
 
     void save(Department department);
 
+    void update(Long id, Department department);
+
     Department getById(Long id);
 
     void delete(Long id);

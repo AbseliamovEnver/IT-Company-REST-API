@@ -8,6 +8,8 @@ public interface RoleService {
 
     void save(Role role);
 
+    void update(Long id, Role role);
+
     Role getById(Long id);
 
     void delete(Long id);

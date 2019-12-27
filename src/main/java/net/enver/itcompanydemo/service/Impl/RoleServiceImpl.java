@@ -1,25 +1,55 @@
 package net.enver.itcompanydemo.service.Impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.enver.itcompanydemo.model.Role;
+import net.enver.itcompanydemo.model.User;
 import net.enver.itcompanydemo.repository.RoleRepository;
+import net.enver.itcompanydemo.repository.UserRepository;
 import net.enver.itcompanydemo.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public RoleServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void save(Role role) {
         roleRepository.save(role);
         log.info("In RoleServiceImpl method save: {} successfully saved", role);
+    }
+
+    @Override
+    public void update(Long id, Role role) {
+        Set<User> userRoles = new HashSet<>();
+
+        Set<User> users = role.getUsers();
+        Role updatedRole = roleRepository.getOne(id);
+
+        if (role.getName() != null) {
+            updatedRole.setName(role.getName());
+        }
+        if (users != null) {
+            for (User user : users) {
+                userRoles.add(userRepository.findByUsername(user.getUsername()));
+            }
+            updatedRole.setUsers(userRoles);
+        }
+        roleRepository.save(updatedRole);
+        log.info("In RoleServiceImpl method update: {} successfully updated", updatedRole);
     }
 
     @Override
