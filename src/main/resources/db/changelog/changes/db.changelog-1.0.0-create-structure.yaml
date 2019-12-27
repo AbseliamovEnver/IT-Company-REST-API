@@ -37,6 +37,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: phone_number
+                  type: varchar(25)
+                  constraints:
+                    nullable: true
+              - column:
                   name: salary
                   type: decimal(7,2)
                   defaultValue: 0.00
