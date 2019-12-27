@@ -2,19 +2,8 @@ package net.enver.itcompanydemo.service;
 
 import net.enver.itcompanydemo.model.Department;
 
-import java.util.List;
+public interface DepartmentService extends BaseService<Department> {
 
-public interface DepartmentService {
+    Department findByName(String name);
 
-    void save(Department department);
-
-    void update(Long id, Department department);
-
-    Department getById(Long id);
-
-    void delete(Long id);
-
-    List<Department> getAll();
-
-    Department findByName(String departmentName);
 }
