@@ -51,7 +51,7 @@ public class PositionRestControllerV1 {
 
     @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Position> updatePosition(@PathVariable @NotNull Long id,
-                                           @RequestBody @Valid Position position, UriComponentsBuilder builder) {
+                                                   @RequestBody @Valid Position position, UriComponentsBuilder builder) {
         HttpHeaders headers = new HttpHeaders();
 
         if (id == null || position == null) {

@@ -1,7 +1,6 @@
 package net.enver.itcompanydemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -59,7 +58,6 @@ public class User extends BaseEntity {
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    @JsonManagedReference
     @EqualsAndHashCode.Exclude
     private Set<Role> roles;
 
@@ -67,7 +65,6 @@ public class User extends BaseEntity {
     @JoinTable(name = "department_users",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")})
-    @JsonManagedReference
     @EqualsAndHashCode.Exclude
     private Set<Department> departments;
 
@@ -75,7 +72,6 @@ public class User extends BaseEntity {
     @JoinTable(name = "user_positions",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "position_id", referencedColumnName = "id")})
-    @JsonManagedReference
     @EqualsAndHashCode.Exclude
     private Set<Position> positions;
 }

@@ -7,6 +7,7 @@ import net.enver.itcompanydemo.repository.PositionRepository;
 import net.enver.itcompanydemo.repository.RoleRepository;
 import net.enver.itcompanydemo.repository.UserRepository;
 import net.enver.itcompanydemo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final PositionRepository positionRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, DepartmentRepository departmentRepository, PositionRepository positionRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -36,13 +38,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+        log.info("In UserServiceImpl method save.");
+
         Set<Role> roles = new HashSet<>();
         Set<Department> departments = new HashSet<>();
+        Set<Position> positions = new HashSet<>();
 
-        for (Department department : user.getDepartments()) {
-            departments.add(departmentRepository.findByName(department.getName()));
+        if (user.getDepartments() == null) {
+            departments.add(departmentRepository.getOne(1L));
+        } else {
+            for (Department department : user.getDepartments()) {
+                departments.add(departmentRepository.findByName(department.getName()));
+            }
         }
-        roles.add(roleRepository.findByName("ROLE_USER"));
+        if (user.getRoles() == null) {
+            roles.add(roleRepository.findByName("ROLE_USER"));
+        } else {
+            for (Role role : user.getRoles()) {
+                roles.add(roleRepository.findByName(role.getName()));
+            }
+        }
+        if (user.getPositions() == null) {
+            positions.add(positionRepository.getOne(1L));
+        } else {
+            for (Position position : user.getPositions()) {
+                positions.add(positionRepository.findByName(position.getName()));
+            }
+        }
 
         if (user.getStatus() == null) {
             user.setStatus(Status.PROBATION);
@@ -51,6 +73,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roles);
         user.setDepartments(departments);
+        user.setPositions(positions);
         userRepository.save(user);
 
         log.info("In UserServiceImpl method save: {} successfully saved", user);
@@ -58,6 +81,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(Long id, User user) {
+        log.info("In UserServiceImpl method update.");
+
         Set<Role> userRoles = new HashSet<>();
         Set<Department> userDepartments = new HashSet<>();
         Set<Position> userPositions = new HashSet<>();
@@ -128,31 +153,59 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        log.info("In UserServiceImpl method getById {}", id);
-        return userRepository.findById(id).orElse(null);
+        log.info("In UserServiceImpl method getById.");
+
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            log.info("User with ID {} found successfully.", id);
+        } else {
+            log.info("User with ID {} not found.", id);
+        }
+        return user;
     }
 
     @Override
     public User findByUsername(String username) {
-        log.info("In UserServiceImpl method findByUsername {}", username);
-        return userRepository.findByUsername(username);
+        log.info("In UserServiceImpl method findByUsername.");
+
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            log.info("User with username {} found successfully.", username);
+        } else {
+            log.info("User with username {} not found.", username);
+        }
+        return user;
     }
 
     @Override
     public User findByPhoneNumber(String phoneNumber) {
-        log.info("In UserServiceImpl method findByPhoneNumber {}", phoneNumber);
-        return userRepository.findByPhoneNumber(phoneNumber);
+        log.info("In UserServiceImpl method findByPhoneNumber.");
+
+        User user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user != null) {
+            log.info("User with phone number {} found successfully.", phoneNumber);
+        } else {
+            log.info("User with phone number {} not found.", phoneNumber);
+        }
+        return user;
     }
 
     @Override
     public List<User> getAll() {
-        log.info("In UserServiceImpl method getAll");
-        return userRepository.findAll();
+        log.info("In UserServiceImpl method getAll.");
+
+        List<User> users = userRepository.findAll();
+
+        log.info("User list found successfully.");
+        return users;
     }
 
     @Override
     public void delete(Long id) {
+        log.info("In UserServiceImpl method delete.");
+
         userRepository.deleteById(id);
-        log.info("In UserServiceImpl method delete {}", id);
+
+        log.info("User with ID {} successfully deleted.", id);
     }
 }

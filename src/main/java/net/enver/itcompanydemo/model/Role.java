@@ -1,6 +1,7 @@
 package net.enver.itcompanydemo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,14 +17,15 @@ import java.util.Set;
 @Table(name = "roles")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(exclude = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @JsonBackReference
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private Set<User> users;
 }

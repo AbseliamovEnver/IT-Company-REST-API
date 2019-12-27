@@ -2,6 +2,7 @@ package net.enver.itcompanydemo.security.jwt;
 
 import io.jsonwebtoken.*;
 import net.enver.itcompanydemo.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ public class JwtUtil {
 
     private UserDetailsService userDetailsService;
 
+    @Autowired
     public void setJwtUtil(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }

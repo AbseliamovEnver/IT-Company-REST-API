@@ -28,12 +28,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void save(Role role) {
+        log.info("In RoleServiceImpl method save.");
+
         roleRepository.save(role);
-        log.info("In RoleServiceImpl method save: {} successfully saved", role);
+
+        log.info("Role {} successfully saved.", role);
     }
 
     @Override
     public void update(Long id, Role role) {
+        log.info("In RoleServiceImpl method update.");
+
         Set<User> userRoles = new HashSet<>();
 
         Set<User> users = role.getUsers();
@@ -49,30 +54,52 @@ public class RoleServiceImpl implements RoleService {
             updatedRole.setUsers(userRoles);
         }
         roleRepository.save(updatedRole);
-        log.info("In RoleServiceImpl method update: {} successfully updated", updatedRole);
+
+        log.info("Role with ID {} successfully updated.", updatedRole);
     }
 
     @Override
     public Role getById(Long id) {
-        log.info("In RoleServiceImpl method getById {}", id);
-        return roleRepository.findById(id).orElse(null);
+        log.info("In RoleServiceImpl method getById.");
+
+        Role role = roleRepository.findById(id).orElse(null);
+        if (role != null) {
+            log.info("Role with ID {} found successfully.", id);
+        } else {
+            log.info("Role with ID {} not found.", id);
+        }
+        return role;
     }
 
     @Override
     public Role findByName(String roleName) {
-        log.info("In RoleServiceImpl method findByName {}", roleName);
-        return roleRepository.findByName(roleName);
+        log.info("In RoleServiceImpl method findByName.");
+
+        Role role = roleRepository.findByName(roleName);
+        if (role != null) {
+            log.info("Role with name {} found successfully.", roleName);
+        } else {
+            log.info("Role with name {} not found.", roleName);
+        }
+        return role;
     }
 
     @Override
     public List<Role> getAll() {
-        log.info("In RoleServiceImpl method getAll");
-        return roleRepository.findAll();
+        log.info("In RoleServiceImpl method getAll.");
+
+        List<Role> roles = roleRepository.findAll();
+
+        log.info("Role list found successfully.");
+        return roles;
     }
 
     @Override
     public void delete(Long id) {
+        log.info("In RoleServiceImpl method delete.");
+
         roleRepository.deleteById(id);
-        log.info("In RoleServiceImpl method delete {}", id);
+
+        log.info("Role with ID {} successfully deleted.", id);
     }
 }

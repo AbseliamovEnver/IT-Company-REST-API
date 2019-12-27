@@ -42,15 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
-                    .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(USER_ENDPOINT).authenticated()
-                    .antMatchers(MODERATOR_ENDPOINT).hasAnyRole("MODERATOR", "ADMIN")
-                    .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(USER_ENDPOINT).authenticated()
+                .antMatchers(MODERATOR_ENDPOINT).hasAnyRole("MODERATOR", "ADMIN")
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                    .apply(new JwtConfigurer(jwtUtil));
+                .apply(new JwtConfigurer(jwtUtil));
         http.headers().cacheControl();
     }
 }
