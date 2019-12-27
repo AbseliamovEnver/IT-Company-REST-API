@@ -26,9 +26,9 @@ public class JwtUtil {
     @Value("${jwt.token.validity}")
     private long validityInMs;
 
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
-    public JwtUtil(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
+    public void setJwtUtil(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
