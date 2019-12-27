@@ -2,8 +2,6 @@ package net.enver.itcompanydemo.security.jwt;
 
 import io.jsonwebtoken.*;
 import net.enver.itcompanydemo.model.User;
-import net.enver.itcompanydemo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,12 +26,11 @@ public class JwtUtil {
     @Value("${jwt.token.validity}")
     private long validityInMs;
 
-    @Qualifier("jwtUserDetailsService")
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private UserService userService;
+    public JwtUtil(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -55,10 +52,9 @@ public class JwtUtil {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String createToken(String username) {
+    public String createToken(User user) {
 
-        User user = userService.findByUsername(username);
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("roles", user.getRoles());
 
         Date now = new Date();

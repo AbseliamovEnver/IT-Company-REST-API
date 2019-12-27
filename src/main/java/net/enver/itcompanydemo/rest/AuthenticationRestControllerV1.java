@@ -51,7 +51,7 @@ public class AuthenticationRestControllerV1 {
                 throw new UsernameNotFoundException("User not found");
             }
 
-            String token = jwtUtil.createToken(user.getUsername());
+            String token = jwtUtil.createToken(user);
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);

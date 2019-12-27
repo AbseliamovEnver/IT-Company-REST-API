@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1/moderator/")
+//@RestController
+//@RequestMapping("/api/v1/moderator/")
 public class ModeratorRestControllerV1 {
+
     private final UserService userService;
 
     @Autowired

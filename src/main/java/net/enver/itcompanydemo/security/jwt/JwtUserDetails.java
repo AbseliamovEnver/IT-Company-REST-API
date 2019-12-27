@@ -16,11 +16,17 @@ import java.util.Set;
 @Data
 public class JwtUserDetails implements UserDetails {
 
+    @JsonIgnore
     private final Long id;
+
     private final String username;
     private final String firstName;
     private final String lastName;
+
+    @JsonIgnore
     private final String password;
+
+    private final String phoneNumber;
     private final BigDecimal salary;
     private final Date birthday;
     private final Date hiredDay;
@@ -29,8 +35,8 @@ public class JwtUserDetails implements UserDetails {
     private final Set<Position> positions;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUserDetails(Long id, String username, String firstName, String lastName,
-                          String password, BigDecimal salary, Date birthday, Date hiredDay, Status status,
+    public JwtUserDetails(Long id, String username, String firstName, String lastName, String password,
+                          String phoneNumber, BigDecimal salary, Date birthday, Date hiredDay, Status status,
                           Set<Department> departments, Set<Position> positions,
                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
@@ -38,6 +44,7 @@ public class JwtUserDetails implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.salary = salary;
         this.birthday = birthday;
         this.hiredDay = hiredDay;
