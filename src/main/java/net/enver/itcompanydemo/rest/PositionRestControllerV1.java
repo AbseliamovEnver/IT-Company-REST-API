@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/positions/")
+@RequestMapping("/api/v1/admin/positions/")
 public class PositionRestControllerV1 {
     private final PositionService positionService;
 

@@ -9,7 +9,7 @@
     <groupId>net.enver</groupId>
     <artifactId>ITCompanyDemo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>ITCompanyDemo Maven Webapp</name>
     <description>IT Company REST API application</description>

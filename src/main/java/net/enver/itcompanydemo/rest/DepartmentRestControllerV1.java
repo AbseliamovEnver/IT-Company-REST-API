@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/departments/")
+@RequestMapping("/api/v1/admin/departments/")
 public class DepartmentRestControllerV1 {
     private final DepartmentService departmentService;
 
