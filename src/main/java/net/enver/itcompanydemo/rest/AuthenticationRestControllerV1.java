@@ -25,11 +25,8 @@ import java.util.Map;
 @RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationRestControllerV1 {
     private final AuthenticationManager authenticationManager;
-
     private final JwtUtil jwtUtil;
-
     private final UserService userService;
-
     private final TwilioService twilioService;
 
     @Autowired

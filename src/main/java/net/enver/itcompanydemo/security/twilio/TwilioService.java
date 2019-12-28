@@ -10,7 +10,7 @@ public class TwilioService {
     private final SmsSender smsSender;
 
     @Autowired
-    public TwilioService(@Qualifier("twilio") TwilioSmsSender smsSender) {
+    public TwilioService(@Qualifier("twilio") SmsSenderImpl smsSender) {
         this.smsSender = smsSender;
     }
 

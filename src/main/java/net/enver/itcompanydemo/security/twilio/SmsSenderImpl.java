@@ -1,24 +1,29 @@
 package net.enver.itcompanydemo.security.twilio;
 
+import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service("twilio")
 @Slf4j
-public class TwilioSmsSender implements SmsSender {
+public class SmsSenderImpl implements SmsSender {
 
-    private final TwilioConfiguration twilioConfiguration;
+    @Value("${twilio.PHONE_NUMBER}")
+    private String trialPhoneNumber;
 
-    @Autowired
-    public TwilioSmsSender(TwilioConfiguration twilioConfiguration) {
-        this.twilioConfiguration = twilioConfiguration;
+    @PostConstruct
+    public void init() {
+        Twilio.init(
+                System.getenv("TWILIO_ACCOUNT_SID"),
+                System.getenv("TWILIO_AUTH_TOKEN"));
     }
 
     @Override
@@ -26,10 +31,10 @@ public class TwilioSmsSender implements SmsSender {
         String phoneNumber = smsRequest.getPhoneNumber();
 
         if (isPhoneNumberValid(phoneNumber)) {
-            PhoneNumber from = new PhoneNumber(twilioConfiguration.getPhoneNumber());
-            PhoneNumber to = new PhoneNumber(phoneNumber);
-            String message = smsRequest.getMessage();
-            MessageCreator creator = Message.creator(to, from, message);
+            MessageCreator creator = Message.creator(
+                    new PhoneNumber(phoneNumber),
+                    new PhoneNumber(trialPhoneNumber),
+                    smsRequest.getMessage());
             creator.create();
             log.info("Send sms {}", smsRequest);
         } else {
@@ -38,7 +43,8 @@ public class TwilioSmsSender implements SmsSender {
     }
 
     private boolean isPhoneNumberValid(String phoneNumber) {
-        Pattern pattern = Pattern.compile("\\+\\d{2}-\\d{3}-\\d{7}");
+//        Pattern pattern = Pattern.compile("\\+\\d{2}-\\d{3}-\\d{7}");
+        Pattern pattern = Pattern.compile("\\+\\d{12}");
         Matcher matcher = pattern.matcher(phoneNumber);
 
         if (matcher.matches()) {
