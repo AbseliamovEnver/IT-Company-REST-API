@@ -41,7 +41,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 user.getSalary(),
                 user.getBirthday(),
                 user.getHiredDay(),
-                user.getStatus(),
+                user.getEmployeeStatus(),
                 user.getDepartments(),
                 user.getPositions(),
                 grantedAuthorities(user.getRoles()));

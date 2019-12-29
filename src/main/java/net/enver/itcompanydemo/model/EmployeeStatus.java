@@ -1,8 +1,8 @@
 package net.enver.itcompanydemo.model;
 
 /**
- * User status
+ * User employeeStatus
  */
-public enum Status {
+public enum EmployeeStatus {
     PROBATION, HIRED, FIRED
 }

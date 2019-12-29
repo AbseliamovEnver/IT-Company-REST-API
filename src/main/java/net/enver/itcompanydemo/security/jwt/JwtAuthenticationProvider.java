@@ -35,7 +35,7 @@ public class JwtAuthenticationProvider /*extends AbstractUserDetailsAuthenticati
 //                jwtUser.getSalary(),
 //                jwtUser.getBirthday(),
 //                jwtUser.getHiredDay(),
-//                jwtUser.getStatus(),
+//                jwtUser.getEmployeeStatus(),
 //                jwtUser.getRoles(),
 //                jwtUser.getDepartments(),
 //                jwtUser.getPositions(),

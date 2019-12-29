@@ -7,4 +7,8 @@ public interface UserService extends BaseService<User> {
     User findByUsername(String username);
 
     User findByPhoneNumber(String phoneNumber);
+
+    User register(User user);
+
+    void activate(User user);
 }

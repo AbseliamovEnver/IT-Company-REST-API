@@ -1,9 +1,10 @@
 package net.enver.itcompanydemo.rest;
 
+import net.enver.itcompanydemo.dto.UserVerifyDto;
+import net.enver.itcompanydemo.exception.PhoneVerificationException;
 import net.enver.itcompanydemo.model.User;
 import net.enver.itcompanydemo.security.jwt.JwtUtil;
-import net.enver.itcompanydemo.security.twilio.SmsRequest;
-import net.enver.itcompanydemo.security.twilio.TwilioService;
+import net.enver.itcompanydemo.security.twilio.PhoneVerificationService;
 import net.enver.itcompanydemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +28,14 @@ public class AuthenticationRestControllerV1 {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final UserService userService;
-    private final TwilioService twilioService;
+    private final PhoneVerificationService phoneVerificationService;
 
     @Autowired
-    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService, TwilioService twilioService) {
+    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService, PhoneVerificationService phoneVerificationService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
-        this.twilioService = twilioService;
+        this.phoneVerificationService = phoneVerificationService;
     }
 
     @PostMapping("login")
@@ -60,8 +61,46 @@ public class AuthenticationRestControllerV1 {
         }
     }
 
-    @PostMapping("twilio")
-    public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
-        twilioService.sendSms(smsRequest);
+    @PostMapping("verify")
+    public ResponseEntity<Map<Object, Object>> verifyPhoneNumber(@RequestBody UserVerifyDto verifyDto) {
+        Map<Object, Object> response = new HashMap<>();
+        try {
+            String phoneNumber = verifyDto.getPhoneNumber();
+            User user = userService.findByPhoneNumber(phoneNumber);
+
+            if (user == null) {
+                throw new UsernameNotFoundException("User with phone number: " + phoneNumber + " not found.");
+            }
+
+            phoneVerificationService.sendSmsCode(phoneNumber);
+
+            response.put("phoneNumber", phoneNumber);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            throw new PhoneVerificationException("Error sending sms message to verify.");
+        }
+    }
+
+    @PostMapping("checksmscode")
+    public ResponseEntity<Map<Object, Object>> checkSmsCode(@RequestBody UserVerifyDto verifyDto) {
+        Map<Object, Object> response = new HashMap<>();
+        try {
+            String phoneNumber = verifyDto.getPhoneNumber();
+            User user = userService.findByPhoneNumber(phoneNumber);
+
+            if (user == null) {
+                throw new UsernameNotFoundException("User with phone number: " + phoneNumber + " not found.");
+            }
+            if (phoneVerificationService.verifySmsCode(phoneNumber, verifyDto.getSmsCode())) {
+                userService.activate(user);
+                response.put("message", "User with username " + user.getUsername() + " is activated.");
+            } else {
+                response.put("message", "The entered code is not correct.");
+            }
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            throw new PhoneVerificationException("Error checking sms code.");
+        }
     }
 }

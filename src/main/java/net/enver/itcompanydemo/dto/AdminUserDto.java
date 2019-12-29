@@ -20,7 +20,7 @@ public class AdminUserDto {
     private BigDecimal salary;
     private Date birthday;
     private Date hiredDay;
-    private Status status;
+    private EmployeeStatus employeeStatus;
     private Set<Role> roles;
     private Set<Department> departments;
     private Set<Position> positions;
@@ -35,7 +35,7 @@ public class AdminUserDto {
         user.setSalary(salary);
         user.setBirthday(birthday);
         user.setHiredDay(hiredDay);
-        user.setStatus(status);
+        user.setEmployeeStatus(employeeStatus);
         user.setRoles(roles);
         user.setDepartments(departments);
         user.setPositions(positions);
@@ -53,7 +53,7 @@ public class AdminUserDto {
         adminUserDto.setSalary(user.getSalary());
         adminUserDto.setBirthday(user.getBirthday());
         adminUserDto.setHiredDay(user.getHiredDay());
-        adminUserDto.setStatus(user.getStatus());
+        adminUserDto.setEmployeeStatus(user.getEmployeeStatus());
         adminUserDto.setRoles(user.getRoles());
         adminUserDto.setDepartments(user.getDepartments());
         adminUserDto.setPositions(user.getPositions());

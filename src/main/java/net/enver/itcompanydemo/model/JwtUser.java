@@ -20,7 +20,7 @@ public class JwtUser {
     private BigDecimal salary;
     private Date birthday;
     private Date hiredDay;
-    private Status status;
+    private EmployeeStatus employeeStatus;
     private Set<Role> roles;
     private Set<Department> departments;
     private Set<Position> positions;

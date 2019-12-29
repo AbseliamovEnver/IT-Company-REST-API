@@ -2,8 +2,8 @@ package net.enver.itcompanydemo.security.jwt;
 
 import lombok.Data;
 import net.enver.itcompanydemo.model.Department;
+import net.enver.itcompanydemo.model.EmployeeStatus;
 import net.enver.itcompanydemo.model.Position;
-import net.enver.itcompanydemo.model.Status;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,13 +30,13 @@ public class JwtUserDetails implements UserDetails {
     private final BigDecimal salary;
     private final Date birthday;
     private final Date hiredDay;
-    private final Status status;
+    private final EmployeeStatus employeeStatus;
     private final Set<Department> departments;
     private final Set<Position> positions;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUserDetails(Long id, String username, String firstName, String lastName, String password,
-                          String phoneNumber, BigDecimal salary, Date birthday, Date hiredDay, Status status,
+                          String phoneNumber, BigDecimal salary, Date birthday, Date hiredDay, EmployeeStatus employeeStatus,
                           Set<Department> departments, Set<Position> positions,
                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
@@ -48,7 +48,7 @@ public class JwtUserDetails implements UserDetails {
         this.salary = salary;
         this.birthday = birthday;
         this.hiredDay = hiredDay;
-        this.status = status;
+        this.employeeStatus = employeeStatus;
         this.departments = departments;
         this.positions = positions;
         this.authorities = authorities;

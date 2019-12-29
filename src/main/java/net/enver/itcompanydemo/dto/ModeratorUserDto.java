@@ -20,7 +20,7 @@ public class ModeratorUserDto {
     private BigDecimal salary;
     private Date birthday;
     private Date hiredDay;
-    private Status status;
+    private EmployeeStatus employeeStatus;
     private Set<Department> departments;
     private Set<Position> positions;
 
@@ -34,7 +34,7 @@ public class ModeratorUserDto {
         user.setSalary(salary);
         user.setBirthday(birthday);
         user.setHiredDay(hiredDay);
-        user.setStatus(status);
+        user.setEmployeeStatus(employeeStatus);
         user.setDepartments(departments);
         user.setPositions(positions);
 
@@ -51,7 +51,7 @@ public class ModeratorUserDto {
         moderatorUserDto.setSalary(user.getSalary());
         moderatorUserDto.setBirthday(user.getBirthday());
         moderatorUserDto.setHiredDay(user.getHiredDay());
-        moderatorUserDto.setStatus(user.getStatus());
+        moderatorUserDto.setEmployeeStatus(user.getEmployeeStatus());
         moderatorUserDto.setDepartments(user.getDepartments());
         moderatorUserDto.setPositions(user.getPositions());
 

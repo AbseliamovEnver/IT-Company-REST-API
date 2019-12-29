@@ -41,16 +41,7 @@ public class UserServiceImpl implements UserService {
         log.info("In UserServiceImpl method save.");
 
         Set<Role> roles = new HashSet<>();
-        Set<Department> departments = new HashSet<>();
-        Set<Position> positions = new HashSet<>();
 
-        if (user.getDepartments() == null) {
-            departments.add(departmentRepository.getOne(1L));
-        } else {
-            for (Department department : user.getDepartments()) {
-                departments.add(departmentRepository.findByName(department.getName()));
-            }
-        }
         if (user.getRoles() == null) {
             roles.add(roleRepository.findByName("ROLE_USER"));
         } else {
@@ -58,22 +49,9 @@ public class UserServiceImpl implements UserService {
                 roles.add(roleRepository.findByName(role.getName()));
             }
         }
-        if (user.getPositions() == null) {
-            positions.add(positionRepository.getOne(1L));
-        } else {
-            for (Position position : user.getPositions()) {
-                positions.add(positionRepository.findByName(position.getName()));
-            }
-        }
-
-        if (user.getStatus() == null) {
-            user.setStatus(Status.PROBATION);
-        }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roles);
-        user.setDepartments(departments);
-        user.setPositions(positions);
         userRepository.save(user);
 
         log.info("In UserServiceImpl method save: {} successfully saved", user);
@@ -97,7 +75,7 @@ public class UserServiceImpl implements UserService {
         BigDecimal salary = user.getSalary();
         Date birthday = user.getBirthday();
         Date hiredDay = user.getHiredDay();
-        Status status = user.getStatus();
+        EmployeeStatus employeeStatus = user.getEmployeeStatus();
         Set<Role> roles = user.getRoles();
         Set<Department> departments = user.getDepartments();
         Set<Position> positions = user.getPositions();
@@ -126,8 +104,8 @@ public class UserServiceImpl implements UserService {
         if (hiredDay != null) {
             updatedUser.setHiredDay(hiredDay);
         }
-        if (status != null) {
-            updatedUser.setStatus(status);
+        if (employeeStatus != null) {
+            updatedUser.setEmployeeStatus(employeeStatus);
         }
         if (roles != null) {
             for (Role role : roles) {
@@ -207,5 +185,19 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
 
         log.info("User with ID {} successfully deleted.", id);
+    }
+
+    @Override
+    public User register(User user) {
+        log.info("In UserServiceImpl method register.");
+
+        return null;
+    }
+
+    @Override
+    public void activate(User user) {
+        log.info("In UserServiceImpl method activate.");
+
+        userRepository.save(user);
     }
 }
