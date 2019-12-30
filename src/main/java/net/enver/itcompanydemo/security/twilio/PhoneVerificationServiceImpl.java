@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 @Slf4j
 public class PhoneVerificationServiceImpl implements PhoneVerificationService {
@@ -15,10 +17,10 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
     private static final String TWILIO_AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     private static final String TWILIO_SERVICE_SID = System.getenv("TWILIO_SERVICE_SID");
 
-    @Value("${twilio.message}")
-    private String messageTwilio;
+    @Value("${twilio.CHANNEL}")
+    private String twilioChannel;
 
-    //    @PostConstruct
+    @PostConstruct
     public void init() {
         Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
     }
@@ -26,7 +28,7 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
     @Override
     public void sendSmsCode(String phoneNumber) {
         Verification verification = Verification
-                .creator(TWILIO_SERVICE_SID, phoneNumber, messageTwilio).create();
+                .creator(TWILIO_SERVICE_SID, phoneNumber, twilioChannel).create();
         log.info("Send sms to number {}", phoneNumber);
         log.info("Verification information: {}", verification);
     }

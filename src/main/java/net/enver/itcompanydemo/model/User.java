@@ -1,6 +1,9 @@
 package net.enver.itcompanydemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,13 +18,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class User extends BaseEntity {
 
     @Column(name = "username", unique = true, nullable = false)
@@ -48,7 +52,8 @@ public class User extends BaseEntity {
     @Column(name = "last_modified_date")
     private Date lastModifiedDate;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Employee employee;
 
     @ManyToMany(fetch = FetchType.EAGER)

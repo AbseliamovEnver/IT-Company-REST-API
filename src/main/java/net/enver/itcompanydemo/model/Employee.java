@@ -1,6 +1,9 @@
 package net.enver.itcompanydemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -19,10 +22,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
-@EqualsAndHashCode
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class Employee {
 
     @Id
@@ -51,8 +53,9 @@ public class Employee {
     @Column(name = "employee_status")
     private EmployeeStatus employeeStatus;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
