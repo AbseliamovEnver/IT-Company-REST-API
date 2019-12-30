@@ -12,10 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -23,16 +21,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final DepartmentRepository departmentRepository;
-    private final PositionRepository positionRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Calendar calendar = Calendar.getInstance();
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, DepartmentRepository departmentRepository, PositionRepository positionRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.departmentRepository = departmentRepository;
-        this.positionRepository = positionRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -52,6 +48,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roles);
+        user.setCreatedDate(calendar.getTime());
+        user.setLastModifiedDate(calendar.getTime());
         userRepository.save(user);
 
         log.info("In UserServiceImpl method save: {} successfully saved", user);
@@ -62,32 +60,15 @@ public class UserServiceImpl implements UserService {
         log.info("In UserServiceImpl method update.");
 
         Set<Role> userRoles = new HashSet<>();
-        Set<Department> userDepartments = new HashSet<>();
-        Set<Position> userPositions = new HashSet<>();
 
         User updatedUser = getById(id);
-
         String username = user.getUsername();
-        String firstName = user.getFirstName();
-        String lastName = user.getLastName();
         String password = user.getPassword();
         String phoneNumber = user.getPhoneNumber();
-        BigDecimal salary = user.getSalary();
-        Date birthday = user.getBirthday();
-        Date hiredDay = user.getHiredDay();
-        EmployeeStatus employeeStatus = user.getEmployeeStatus();
         Set<Role> roles = user.getRoles();
-        Set<Department> departments = user.getDepartments();
-        Set<Position> positions = user.getPositions();
 
         if (username != null) {
             updatedUser.setUsername(username);
-        }
-        if (firstName != null) {
-            updatedUser.setFirstName(firstName);
-        }
-        if (lastName != null) {
-            updatedUser.setLastName(lastName);
         }
         if (password != null) {
             updatedUser.setPassword(bCryptPasswordEncoder.encode(password));
@@ -95,37 +76,15 @@ public class UserServiceImpl implements UserService {
         if (phoneNumber != null) {
             updatedUser.setPhoneNumber(phoneNumber);
         }
-        if (salary != null) {
-            updatedUser.setSalary(salary);
-        }
-        if (birthday != null) {
-            updatedUser.setBirthday(birthday);
-        }
-        if (hiredDay != null) {
-            updatedUser.setHiredDay(hiredDay);
-        }
-        if (employeeStatus != null) {
-            updatedUser.setEmployeeStatus(employeeStatus);
-        }
         if (roles != null) {
             for (Role role : roles) {
                 userRoles.add(roleRepository.findByName(role.getName()));
             }
             updatedUser.setRoles(userRoles);
         }
-        if (departments != null) {
-            for (Department department : departments) {
-                userDepartments.add(departmentRepository.findByName(department.getName()));
-            }
-            updatedUser.setDepartments(userDepartments);
-        }
-        if (positions != null) {
-            for (Position position : positions) {
-                userPositions.add(positionRepository.findByName(position.getName()));
-            }
-            updatedUser.setPositions(userPositions);
-        }
+        user.setLastModifiedDate(calendar.getTime());
         userRepository.save(updatedUser);
+
         log.info("In UserServiceImpl method update: {} successfully updated", updatedUser);
     }
 
@@ -174,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
         List<User> users = userRepository.findAll();
 
-        log.info("User list found successfully.");
+        log.info("User list successfully found.");
         return users;
     }
 
@@ -182,6 +141,9 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         log.info("In UserServiceImpl method delete.");
 
+        User user = getById(id);
+        user.setUserStatus(UserStatus.DELETED);
+        user.setLastModifiedDate(calendar.getTime());
         userRepository.deleteById(id);
 
         log.info("User with ID {} successfully deleted.", id);
@@ -191,13 +153,29 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         log.info("In UserServiceImpl method register.");
 
-        return null;
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findByName("ROLE_USER"));
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(roles);
+        user.setUserStatus(UserStatus.INACTIVE);
+        user.setCreatedDate(calendar.getTime());
+        user.setLastModifiedDate(calendar.getTime());
+
+        User registeredUser = userRepository.save(user);
+
+        log.info("User {} successfully registered.", registeredUser);
+        return registeredUser;
     }
 
     @Override
     public void activate(User user) {
         log.info("In UserServiceImpl method activate.");
 
+        user.setUserStatus(UserStatus.ACTIVE);
+        user.setLastModifiedDate(calendar.getTime());
         userRepository.save(user);
+
+        log.info("User {} activated successfully.", user);
     }
 }

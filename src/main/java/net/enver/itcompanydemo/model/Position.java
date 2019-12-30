@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "positions")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(exclude = "users")
+@ToString(exclude = "employees")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Position extends BaseEntity {
 
@@ -27,5 +27,5 @@ public class Position extends BaseEntity {
     @ManyToMany(mappedBy = "positions", fetch = FetchType.LAZY)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
-    private Set<User> users;
+    private Set<Employee> employees;
 }

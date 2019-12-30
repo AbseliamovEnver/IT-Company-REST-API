@@ -73,7 +73,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findByName(String roleName) {
-        log.info("In RoleServiceImpl method findByName.");
+        log.info("In RoleServiceImpl method findById.");
 
         Role role = roleRepository.findByName(roleName);
         if (role != null) {

@@ -51,7 +51,7 @@ public class Employee {
     @Column(name = "employee_status")
     private EmployeeStatus employeeStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
 

@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/admin/departments/")
 public class DepartmentRestControllerV1 {
+
     private final DepartmentService departmentService;
 
     @Autowired

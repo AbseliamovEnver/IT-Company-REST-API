@@ -41,14 +41,14 @@ public class User extends BaseEntity {
     private UserStatus userStatus;
 
     @CreatedDate
-    @Column(name = "date_create")
-    private Date dateCreate;
+    @Column(name = "created_date")
+    private Date createdDate;
 
     @LastModifiedDate
-    @Column(name = "date_update")
-    private Date dateUpdate;
+    @Column(name = "last_modified_date")
+    private Date lastModifiedDate;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Employee employee;
 
     @ManyToMany(fetch = FetchType.EAGER)

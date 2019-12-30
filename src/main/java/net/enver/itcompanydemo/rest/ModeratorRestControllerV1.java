@@ -1,8 +1,8 @@
 package net.enver.itcompanydemo.rest;
 
-import net.enver.itcompanydemo.dto.ModeratorUserDto;
-import net.enver.itcompanydemo.model.User;
-import net.enver.itcompanydemo.service.UserService;
+import net.enver.itcompanydemo.dto.ModeratorEmployeeDto;
+import net.enver.itcompanydemo.model.Employee;
+import net.enver.itcompanydemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,37 +14,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@RestController
-//@RequestMapping("/api/v1/moderator/")
+@RestController
+@RequestMapping("/api/v1/moderator/")
 public class ModeratorRestControllerV1 {
 
-    private final UserService userService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public ModeratorRestControllerV1(UserService userService) {
-        this.userService = userService;
+    public ModeratorRestControllerV1(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-    @GetMapping(value = "users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModeratorUserDto> getUserById(@PathVariable("id") Long userId) {
-        if (userId == null) {
+    @GetMapping(value = "employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ModeratorEmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId) {
+        if (employeeId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        User user = this.userService.getById(userId);
+        Employee employee = this.employeeService.getById(employeeId);
 
-        if (user == null) {
+        if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ModeratorUserDto.fromUser(user), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorEmployeeDto.fromEmployee(employee), HttpStatus.OK);
     }
 
-    @GetMapping(value = "users/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ModeratorUserDto>> getAllUser() {
-        List<User> users = this.userService.getAll();
+    @GetMapping(value = "employee/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ModeratorEmployeeDto>> getAllEmployee() {
+        List<Employee> employees = this.employeeService.getAll();
 
-        if (users == null) {
+        if (employees == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ModeratorUserDto.moderatorUserDtoList(users), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorEmployeeDto.moderatorEmployeeDtoList(employees), HttpStatus.OK);
     }
 }

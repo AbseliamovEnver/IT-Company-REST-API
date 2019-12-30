@@ -17,15 +17,15 @@ import java.util.Set;
 @Table(name = "departments")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(exclude = "users")
+@ToString(exclude = "employees")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Department extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "departments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
-    private Set<User> users;
+    private Set<Employee> employees;
 }

@@ -1,10 +1,10 @@
 package net.enver.itcompanydemo.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
+import net.enver.itcompanydemo.model.Employee;
 import net.enver.itcompanydemo.model.Position;
-import net.enver.itcompanydemo.model.User;
+import net.enver.itcompanydemo.repository.EmployeeRepository;
 import net.enver.itcompanydemo.repository.PositionRepository;
-import net.enver.itcompanydemo.repository.UserRepository;
 import net.enver.itcompanydemo.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ import java.util.Set;
 public class PositionServiceImpl implements PositionService {
 
     private final PositionRepository positionRepository;
-    private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public PositionServiceImpl(PositionRepository positionRepository, UserRepository userRepository) {
+    public PositionServiceImpl(PositionRepository positionRepository, EmployeeRepository employeeRepository) {
         this.positionRepository = positionRepository;
-        this.userRepository = userRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -39,23 +39,28 @@ public class PositionServiceImpl implements PositionService {
     public void update(Long id, Position position) {
         log.info("In PositionServiceImpl method update.");
 
-        Set<User> userPositions = new HashSet<>();
+        Employee findEmployee;
+        Set<Employee> employeePositions = new HashSet<>();
 
-        Set<User> users = position.getUsers();
-        Position updatedPosition = positionRepository.getOne(id);
+        Position updatedPosition = getById(id);
+        Set<Employee> employees = position.getEmployees();
 
-        if (position.getName() != null) {
-            updatedPosition.setName(position.getName());
-        }
-        if (users != null) {
-            for (User user : users) {
-                userPositions.add(userRepository.findByUsername(user.getUsername()));
+        if (updatedPosition != null) {
+            if (position.getName() != null) {
+                updatedPosition.setName(position.getName());
             }
-            updatedPosition.setUsers(userPositions);
-        }
-        positionRepository.save(updatedPosition);
+            if (employees != null) {
+                for (Employee employee : employees) {
+                    if ((findEmployee = employeeRepository.findById(employee.getId()).orElse(null)) != null) {
+                        employeePositions.add(findEmployee);
+                    }
+                }
+                updatedPosition.setEmployees(employeePositions);
+            }
+            positionRepository.save(updatedPosition);
 
-        log.info("Position with ID {} successfully updated.", updatedPosition);
+            log.info("Position with ID {} successfully updated.", updatedPosition);
+        }
     }
 
     @Override
@@ -73,7 +78,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public Position findByName(String positionName) {
-        log.info("In PositionServiceImpl method findByName.");
+        log.info("In PositionServiceImpl method findById.");
 
         Position position = positionRepository.findByName(positionName);
         if (position != null) {

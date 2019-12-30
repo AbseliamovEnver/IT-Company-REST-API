@@ -15,9 +15,7 @@ import java.util.Set;
 public class UserDto {
     private Long id;
     private String username;
-    private String firstName;
-    private String lastName;
-    private Date birthday;
+    private String phoneNumber;
     private Set<Department> departments;
 
     public User toUser() {
@@ -25,10 +23,6 @@ public class UserDto {
 
         user.setId(id);
         user.setUsername(username);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setBirthday(birthday);
-        user.setDepartments(departments);
 
         return user;
     }
@@ -38,10 +32,7 @@ public class UserDto {
 
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setBirthday(user.getBirthday());
-        userDto.setDepartments(user.getDepartments());
+        userDto.setPhoneNumber(user.getPhoneNumber());
 
         return userDto;
     }

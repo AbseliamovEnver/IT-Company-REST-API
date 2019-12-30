@@ -2,9 +2,9 @@ package net.enver.itcompanydemo.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
 import net.enver.itcompanydemo.model.Department;
-import net.enver.itcompanydemo.model.User;
+import net.enver.itcompanydemo.model.Employee;
 import net.enver.itcompanydemo.repository.DepartmentRepository;
-import net.enver.itcompanydemo.repository.UserRepository;
+import net.enver.itcompanydemo.repository.EmployeeRepository;
 import net.enver.itcompanydemo.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ import java.util.Set;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
-    private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository, UserRepository userRepository) {
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         this.departmentRepository = departmentRepository;
-        this.userRepository = userRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -39,23 +39,28 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void update(Long id, Department department) {
         log.info("In DepartmentServiceImpl method update.");
 
-        Set<User> userDepartments = new HashSet<>();
+        Employee findEmployee;
+        Set<Employee> employeeDepartments = new HashSet<>();
 
-        Set<User> users = department.getUsers();
-        Department updatedDepartment = departmentRepository.getOne(id);
+        Department updatedDepartment = getById(id);
+        Set<Employee> employees = department.getEmployees();
 
-        if (department.getName() != null) {
-            updatedDepartment.setName(department.getName());
-        }
-        if (users != null) {
-            for (User user : users) {
-                userDepartments.add(userRepository.findByUsername(user.getUsername()));
+        if (updatedDepartment != null) {
+            if (department.getName() != null) {
+                updatedDepartment.setName(department.getName());
             }
-            updatedDepartment.setUsers(userDepartments);
-        }
-        departmentRepository.save(updatedDepartment);
+            if (employees != null) {
+                for (Employee employee : employees) {
+                    if ((findEmployee = employeeRepository.findById(employee.getId()).orElse(null)) != null) {
+                        employeeDepartments.add(findEmployee);
+                    }
+                }
+                updatedDepartment.setEmployees(employeeDepartments);
+            }
+            departmentRepository.save(updatedDepartment);
 
-        log.info("Department with ID {} successfully updated.", updatedDepartment);
+            log.info("Department with ID {} successfully updated.", updatedDepartment);
+        }
     }
 
     @Override
@@ -73,7 +78,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department findByName(String departmentName) {
-        log.info("In DepartmentServiceImpl method findByName.");
+        log.info("In DepartmentServiceImpl method findById.");
 
         Department department = departmentRepository.findByName(departmentName);
         if (department != null) {

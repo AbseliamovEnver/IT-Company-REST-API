@@ -1,8 +1,8 @@
 package net.enver.itcompanydemo.security;
 
-import net.enver.itcompanydemo.security.jwt.JwtUserDetails;
 import net.enver.itcompanydemo.model.Role;
 import net.enver.itcompanydemo.model.User;
+import net.enver.itcompanydemo.security.jwt.JwtUserDetails;
 import net.enver.itcompanydemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,16 +34,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         return new JwtUserDetails(
                 user.getId(),
                 user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
                 user.getPassword(),
                 user.getPhoneNumber(),
-                user.getSalary(),
-                user.getBirthday(),
-                user.getHiredDay(),
-                user.getEmployeeStatus(),
-                user.getDepartments(),
-                user.getPositions(),
                 grantedAuthorities(user.getRoles()));
     }
 

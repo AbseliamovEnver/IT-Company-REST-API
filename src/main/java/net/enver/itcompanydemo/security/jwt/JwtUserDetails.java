@@ -1,17 +1,11 @@
 package net.enver.itcompanydemo.security.jwt;
 
 import lombok.Data;
-import net.enver.itcompanydemo.model.Department;
-import net.enver.itcompanydemo.model.EmployeeStatus;
-import net.enver.itcompanydemo.model.Position;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
 
 @Data
 public class JwtUserDetails implements UserDetails {
@@ -20,37 +14,19 @@ public class JwtUserDetails implements UserDetails {
     private final Long id;
 
     private final String username;
-    private final String firstName;
-    private final String lastName;
 
     @JsonIgnore
     private final String password;
 
     private final String phoneNumber;
-    private final BigDecimal salary;
-    private final Date birthday;
-    private final Date hiredDay;
-    private final EmployeeStatus employeeStatus;
-    private final Set<Department> departments;
-    private final Set<Position> positions;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUserDetails(Long id, String username, String firstName, String lastName, String password,
-                          String phoneNumber, BigDecimal salary, Date birthday, Date hiredDay, EmployeeStatus employeeStatus,
-                          Set<Department> departments, Set<Position> positions,
+    public JwtUserDetails(Long id, String username, String password, String phoneNumber,
                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.salary = salary;
-        this.birthday = birthday;
-        this.hiredDay = hiredDay;
-        this.employeeStatus = employeeStatus;
-        this.departments = departments;
-        this.positions = positions;
         this.authorities = authorities;
     }
 

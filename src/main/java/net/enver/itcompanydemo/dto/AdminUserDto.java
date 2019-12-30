@@ -2,9 +2,10 @@ package net.enver.itcompanydemo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import net.enver.itcompanydemo.model.*;
+import net.enver.itcompanydemo.model.Role;
+import net.enver.itcompanydemo.model.User;
+import net.enver.itcompanydemo.model.UserStatus;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,32 +14,25 @@ import java.util.Set;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdminUserDto {
+
     private Long id;
     private String username;
-    private String firstName;
-    private String lastName;
-    private BigDecimal salary;
-    private Date birthday;
-    private Date hiredDay;
-    private EmployeeStatus employeeStatus;
+    private String phoneNumber;
+    private UserStatus userStatus;
     private Set<Role> roles;
-    private Set<Department> departments;
-    private Set<Position> positions;
+    private Date createdDate;
+    private Date lastModifiedDate;
 
     public User toUser() {
         User user = new User();
 
         user.setId(id);
         user.setUsername(username);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setSalary(salary);
-        user.setBirthday(birthday);
-        user.setHiredDay(hiredDay);
-        user.setEmployeeStatus(employeeStatus);
+        user.setPhoneNumber(phoneNumber);
         user.setRoles(roles);
-        user.setDepartments(departments);
-        user.setPositions(positions);
+        user.setUserStatus(userStatus);
+        user.setCreatedDate(createdDate);
+        user.setLastModifiedDate(lastModifiedDate);
 
         return user;
     }
@@ -48,15 +42,11 @@ public class AdminUserDto {
 
         adminUserDto.setId(user.getId());
         adminUserDto.setUsername(user.getUsername());
-        adminUserDto.setFirstName(user.getFirstName());
-        adminUserDto.setLastName(user.getLastName());
-        adminUserDto.setSalary(user.getSalary());
-        adminUserDto.setBirthday(user.getBirthday());
-        adminUserDto.setHiredDay(user.getHiredDay());
-        adminUserDto.setEmployeeStatus(user.getEmployeeStatus());
+        adminUserDto.setPhoneNumber(user.getPhoneNumber());
         adminUserDto.setRoles(user.getRoles());
-        adminUserDto.setDepartments(user.getDepartments());
-        adminUserDto.setPositions(user.getPositions());
+        adminUserDto.setUserStatus(user.getUserStatus());
+        adminUserDto.setCreatedDate(user.getCreatedDate());
+        adminUserDto.setLastModifiedDate(user.getLastModifiedDate());
 
         return adminUserDto;
     }
