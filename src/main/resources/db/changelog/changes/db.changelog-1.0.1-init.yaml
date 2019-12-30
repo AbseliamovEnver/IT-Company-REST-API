@@ -331,10 +331,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: department_id
-                  value: 41
+                  value: 51
               - column:
                   name: employee_id
-                  value: 31
+                  value: 11
   - changeSet:
       id: 2.0.8
       author: enver
