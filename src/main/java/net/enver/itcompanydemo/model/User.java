@@ -33,7 +33,7 @@ public class User extends BaseEntity {
     @Transient
     private String confirmPassword;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true, nullable = false)
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)

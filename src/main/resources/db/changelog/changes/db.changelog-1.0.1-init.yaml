@@ -12,17 +12,76 @@ databaseChangeLog:
                   name: username
                   value: Admin
               - column:
-                  name: first_name
-                  value: Ivan
-              - column:
-                  name: last_name
-                  value: Ivanov
-              - column:
                   name: password
                   value: $2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG
               - column:
                   name: phone_number
                   value: 380994189100
+              - column:
+                  name: user_status
+                  value: "ACTIVE"
+              - column:
+                  name: created_date
+                  value: now()
+              - column:
+                  name: last_modified_date
+                  value: now()
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: Moderator
+              - column:
+                  name: password
+                  value: $2y$12$PQds9bt1c3rv/KHzSnLBnet7khQOvOEFl2Rx8hZBpViZPBWMelVrG
+              - column:
+                  name: phone_number
+                  value: 380990019814
+              - column:
+                  name: user_status
+                  value: "ACTIVE"
+              - column:
+                  name: created_date
+                  value: now()
+              - column:
+                  name: last_modified_date
+                  value: now()
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: User
+              - column:
+                  name: password
+                  value: $2y$12$EkDcyaxQSkcrqYIoenUeceMq6BSsF.VrMhH.TJ3Ng/cVZ9ft3JQtm
+              - column:
+                  name: phone_number
+                  value: 380999814814
+              - column:
+                  name: user_status
+                  value: "ACTIVE"
+              - column:
+                  name: created_date
+                  value: now()
+              - column:
+                  name: last_modified_date
+                  value: now()
+  - changeSet:
+      id: 2.0.2
+      author: enver
+      comment: insert_employee
+      changes:
+        - insert:
+            tableName: employees
+            columns:
+              - column:
+                  name: first_name
+                  value: Ivan
+              - column:
+                  name: last_name
+                  value: Ivanov
               - column:
                   name: salary
                   value: 1000.00
@@ -33,26 +92,17 @@ databaseChangeLog:
                   name: hired_day
                   value: "2015-02-02"
               - column:
-                  name: status
+                  name: employee_status
                   value: "HIRED"
         - insert:
-            tableName: users
+            tableName: employees
             columns:
-              - column:
-                  name: username
-                  value: Moderator
               - column:
                   name: first_name
                   value: Petr
               - column:
                   name: last_name
                   value: Petrov
-              - column:
-                  name: password
-                  value: $2y$12$PQds9bt1c3rv/KHzSnLBnet7khQOvOEFl2Rx8hZBpViZPBWMelVrG
-              - column:
-                  name: phone_number
-                  value: null
               - column:
                   name: salary
                   value: 2500.00
@@ -63,14 +113,11 @@ databaseChangeLog:
                   name: hired_day
                   value: "2011-04-04"
               - column:
-                  name: status
+                  name: employee_status
                   value: "HIRED"
         - insert:
-            tableName: users
+            tableName: employees
             columns:
-              - column:
-                  name: username
-                  value: User
               - column:
                   name: first_name
                   value: Sidr
@@ -78,14 +125,8 @@ databaseChangeLog:
                   name: last_name
                   value: Sidorov
               - column:
-                  name: password
-                  value: $2y$12$EkDcyaxQSkcrqYIoenUeceMq6BSsF.VrMhH.TJ3Ng/cVZ9ft3JQtm
-              - column:
-                  name: phone_number
-                  value: null
-              - column:
                   name: salary
-                  value: 850.00
+                  value: 1500.00
               - column:
                   name: birthday
                   value: "2005-06-06"
@@ -93,10 +134,10 @@ databaseChangeLog:
                   name: hired_day
                   value: "2018-07-07"
               - column:
-                  name: status
+                  name: employee_status
                   value: "HIRED"
   - changeSet:
-      id: 2.0.2
+      id: 2.0.3
       author: enver
       comment: insert_role
       changes:
@@ -117,9 +158,15 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
+                  value: ROLE_EMPLOYEE
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
                   value: ROLE_USER
   - changeSet:
-      id: 2.0.3
+      id: 2.0.4
       author: enver
       comment: insert_department
       changes:
@@ -160,7 +207,7 @@ databaseChangeLog:
                   name: name
                   value: IT
   - changeSet:
-      id: 2.0.4
+      id: 2.0.5
       author: enver
       comment: insert_positions
       changes:
@@ -207,7 +254,7 @@ databaseChangeLog:
                   name: name
                   value: Software tester
   - changeSet:
-      id: 2.0.5
+      id: 2.0.6
       author: enver
       comment: insert_user_roles
       changes:
@@ -225,98 +272,98 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_id
-                  value: 11
+                  value: 2
               - column:
                   name: role_id
-                  value: 11
+                  value: 2
         - insert:
             tableName: user_roles
             columns:
               - column:
                   name: user_id
-                  value: 21
+                  value: 3
               - column:
                   name: role_id
-                  value: 21
-  - changeSet:
-      id: 2.0.6
-      author: enver
-      comment: insert_department_users
-      changes:
-        - insert:
-            tableName: department_users
-            columns:
-              - column:
-                  name: department_id
-                  value: 1
-              - column:
-                  name: user_id
-                  value: 1
-        - insert:
-            tableName: department_users
-            columns:
-              - column:
-                  name: department_id
-                  value: 11
-              - column:
-                  name: user_id
-                  value: 11
-        - insert:
-            tableName: department_users
-            columns:
-              - column:
-                  name: department_id
-                  value: 21
-              - column:
-                  name: user_id
-                  value: 11
-        - insert:
-            tableName: department_users
-            columns:
-              - column:
-                  name: department_id
-                  value: 31
-              - column:
-                  name: user_id
-                  value: 21
-        - insert:
-            tableName: department_users
-            columns:
-              - column:
-                  name: department_id
-                  value: 41
-              - column:
-                  name: user_id
-                  value: 21
+                  value: 3
   - changeSet:
       id: 2.0.7
       author: enver
-      comment: insert_user_positions
+      comment: insert_department_employees
       changes:
         - insert:
-            tableName: user_positions
+            tableName: department_employees
             columns:
               - column:
-                  name: user_id
+                  name: department_id
+                  value: 1
+              - column:
+                  name: employee_id
+                  value: 1
+        - insert:
+            tableName: department_employees
+            columns:
+              - column:
+                  name: department_id
+                  value: 2
+              - column:
+                  name: employee_id
+                  value: 2
+        - insert:
+            tableName: department_employees
+            columns:
+              - column:
+                  name: department_id
+                  value: 3
+              - column:
+                  name: employee_id
+                  value: 2
+        - insert:
+            tableName: department_employees
+            columns:
+              - column:
+                  name: department_id
+                  value: 3
+              - column:
+                  name: employee_id
+                  value: 2
+        - insert:
+            tableName: department_employees
+            columns:
+              - column:
+                  name: department_id
+                  value: 4
+              - column:
+                  name: employee_id
+                  value: 3
+  - changeSet:
+      id: 2.0.8
+      author: enver
+      comment: insert_employee_positions
+      changes:
+        - insert:
+            tableName: employee_positions
+            columns:
+              - column:
+                  name: employee_id
                   value: 1
               - column:
                   name: position_id
-                  value: 61
+                  value: 7
         - insert:
-            tableName: user_positions
+            tableName: employee_positions
             columns:
               - column:
-                  name: user_id
-                  value: 11
+                  name: employee_id
+                  value: 2
               - column:
                   name: position_id
-                  value: 11
+                  value: 2
         - insert:
-            tableName: user_positions
+            tableName: employee_positions
             columns:
               - column:
-                  name: user_id
-                  value: 21
+                  name: employee_id
+                  value: 3
               - column:
                   name: position_id
-                  value: 21
+                  value: 3

@@ -56,7 +56,7 @@ public class Employee {
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "employee_departments",
+    @JoinTable(name = "department_employees",
             joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")})
     @EqualsAndHashCode.Exclude

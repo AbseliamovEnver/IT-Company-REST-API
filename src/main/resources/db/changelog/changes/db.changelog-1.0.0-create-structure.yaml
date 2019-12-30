@@ -22,16 +22,6 @@ databaseChangeLog:
                     unique: true
                     nullable: false
               - column:
-                  name: first_name
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_name
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
                   name: password
                   type: varchar(255)
                   constraints:
@@ -40,7 +30,48 @@ databaseChangeLog:
                   name: phone_number
                   type: varchar(25)
                   constraints:
-                    nullable: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: user_status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: datetime
+                  defaultValue: now()
+              - column:
+                  name: last_modified_date
+                  type: datetime
+                  defaultValue: now()
+  - changeSet:
+      id: 1.0.2
+      author: enver
+      comment: create_table_employees
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    unique: false
+                    nullable: false
               - column:
                   name: salary
                   type: decimal(7,2)
@@ -58,12 +89,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: status
+                  name: employee_status
                   type: varchar(50)
                   constraints:
                     nullable: false
   - changeSet:
-      id: 1.0.2
+      id: 1.0.3
       author: enver
       comment: create_table_roles
       changes:
@@ -83,7 +114,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: 1.0.3
+      id: 1.0.4
       author: enver
       comment: create_table_departments
       changes:
@@ -103,7 +134,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: 1.0.4
+      id: 1.0.5
       author: enver
       comment: create_table_positions
       changes:
@@ -123,7 +154,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
-      id: 1.0.5
+      id: 1.0.6
       author: enver
       comment: create_table_user_roles
       changes:
@@ -149,45 +180,45 @@ databaseChangeLog:
                     nullable: false
                     onDelete: CASCADE
   - changeSet:
-      id: 1.0.6
+      id: 1.0.7
       author: enver
-      comment: create_table_department_users
+      comment: create_table_department_employees
       changes:
         - createTable:
-            tableName: department_users
+            tableName: department_employees
             columns:
               - column:
                   name: department_id
                   type: BIGINT
                   constraints:
-                    foreignKeyName: fk_department_users_department_id
+                    foreignKeyName: fk_department_employees_department_id
                     referencedTableName: departments
                     referencedColumnNames: id
                     nullable: false
                     onDelete: CASCADE
               - column:
-                  name: user_id
+                  name: employee_id
                   type: BIGINT
                   constraints:
-                    foreignKeyName: fk_department_users_user_id
-                    referencedTableName: users
+                    foreignKeyName: fk_department_employees_employee_id
+                    referencedTableName: employees
                     referencedColumnNames: id
                     nullable: false
                     onDelete: CASCADE
   - changeSet:
-      id: 1.0.7
+      id: 1.0.8
       author: enver
-      comment: create_table_user_positions
+      comment: create_table_employee_positions
       changes:
         - createTable:
-            tableName: user_positions
+            tableName: employee_positions
             columns:
               - column:
-                  name: user_id
+                  name: employee_id
                   type: BIGINT
                   constraints:
-                    foreignKeyName: fk_user_positions_user_id
-                    referencedTableName: users
+                    foreignKeyName: fk_employee_positions_employee_id
+                    referencedTableName: employees
                     referencedColumnNames: id
                     nullable: false
                     onDelete: CASCADE
@@ -195,7 +226,7 @@ databaseChangeLog:
                   name: position_id
                   type: BIGINT
                   constraints:
-                    foreignKeyName: fk_user_positions_position_id
+                    foreignKeyName: fk_employee_positions_position_id
                     referencedTableName: positions
                     referencedColumnNames: id
                     nullable: false
