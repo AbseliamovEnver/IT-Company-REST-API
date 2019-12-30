@@ -20,13 +20,9 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
     @Value("${twilio.CHANNEL}")
     private String twilioChannel;
 
-    @PostConstruct
-    public void init() {
-        Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
-    }
-
     @Override
     public void sendSmsCode(String phoneNumber) {
+        Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
         Verification verification = Verification
                 .creator(TWILIO_SERVICE_SID, phoneNumber, twilioChannel).create();
         log.info("Send sms to number {}", phoneNumber);
