@@ -272,19 +272,19 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_id
-                  value: 2
+                  value: 11
               - column:
                   name: role_id
-                  value: 2
+                  value: 11
         - insert:
             tableName: user_roles
             columns:
               - column:
                   name: user_id
-                  value: 3
+                  value: 21
               - column:
                   name: role_id
-                  value: 3
+                  value: 21
   - changeSet:
       id: 2.0.7
       author: enver
@@ -304,37 +304,37 @@ databaseChangeLog:
             columns:
               - column:
                   name: department_id
-                  value: 2
+                  value: 11
               - column:
                   name: employee_id
-                  value: 2
+                  value: 11
         - insert:
             tableName: department_employees
             columns:
               - column:
                   name: department_id
-                  value: 3
+                  value: 21
               - column:
                   name: employee_id
-                  value: 2
+                  value: 21
         - insert:
             tableName: department_employees
             columns:
               - column:
                   name: department_id
-                  value: 3
+                  value: 31
               - column:
                   name: employee_id
-                  value: 2
+                  value: 21
         - insert:
             tableName: department_employees
             columns:
               - column:
                   name: department_id
-                  value: 4
+                  value: 41
               - column:
                   name: employee_id
-                  value: 3
+                  value: 31
   - changeSet:
       id: 2.0.8
       author: enver
@@ -348,22 +348,22 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: position_id
-                  value: 7
+                  value: 61
         - insert:
             tableName: employee_positions
             columns:
               - column:
                   name: employee_id
-                  value: 2
+                  value: 11
               - column:
                   name: position_id
-                  value: 2
+                  value: 11
         - insert:
             tableName: employee_positions
             columns:
               - column:
                   name: employee_id
-                  value: 3
+                  value: 21
               - column:
                   name: position_id
-                  value: 3
+                  value: 21
