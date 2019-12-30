@@ -16,7 +16,7 @@ databaseChangeLog:
                   value: $2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG
               - column:
                   name: phone_number
-                  value: 380994189100
+                  value: "+380994189100"
               - column:
                   name: user_status
                   value: "ACTIVE"
@@ -37,7 +37,7 @@ databaseChangeLog:
                   value: $2y$12$PQds9bt1c3rv/KHzSnLBnet7khQOvOEFl2Rx8hZBpViZPBWMelVrG
               - column:
                   name: phone_number
-                  value: 380990019814
+                  value: "+380990019814"
               - column:
                   name: user_status
                   value: "ACTIVE"
@@ -58,7 +58,7 @@ databaseChangeLog:
                   value: $2y$12$EkDcyaxQSkcrqYIoenUeceMq6BSsF.VrMhH.TJ3Ng/cVZ9ft3JQtm
               - column:
                   name: phone_number
-                  value: 380999814814
+                  value: "+380999814814"
               - column:
                   name: user_status
                   value: "ACTIVE"
