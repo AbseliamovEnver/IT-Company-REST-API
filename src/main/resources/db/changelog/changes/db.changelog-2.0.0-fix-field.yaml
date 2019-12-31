@@ -1,0 +1,32 @@
+changeSet:
+  id: 2.1.0
+  author: enver
+  comment: update-phone_number_field
+  changes:
+    - update:
+        catalogName: heroku_92aa4154596cf67
+        columns:
+          - column:
+              name: phone_number
+              value: "+380994189100"
+        schemaName: public
+        tableName: users
+        where: username='Admin'
+    - update:
+        catalogName: heroku_92aa4154596cf67
+        columns:
+          - column:
+              name: phone_number
+              value: "+380990019814"
+        schemaName: public
+        tableName: users
+        where: username='Moderator'
+    - update:
+        catalogName: heroku_92aa4154596cf67
+        columns:
+          - column:
+              name: phone_number
+              value: "+380999814814"
+        schemaName: public
+        tableName: users
+        where: username='User'
