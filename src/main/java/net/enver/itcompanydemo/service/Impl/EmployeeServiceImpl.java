@@ -7,6 +7,7 @@ import net.enver.itcompanydemo.repository.EmployeeRepository;
 import net.enver.itcompanydemo.repository.PositionRepository;
 import net.enver.itcompanydemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -149,5 +150,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         log.info("Employee list found successfully.");
         return employees;
+    }
+
+    public Employee hired(Employee employee) {
+        log.info("In EmployeeServiceImpl method hired.");
+
+        if (employee == null) {
+            log.info("Employee not found.");
+            throw new UsernameNotFoundException("Employee not found.");
+        }
+
+        employee.setEmployeeStatus(EmployeeStatus.HIRED);
+
+        log.info("Employee {} successfully hired.", employee);
+        return employee;
     }
 }

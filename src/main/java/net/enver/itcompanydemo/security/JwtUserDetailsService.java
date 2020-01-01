@@ -1,7 +1,10 @@
 package net.enver.itcompanydemo.security;
 
+import lombok.extern.slf4j.Slf4j;
+import net.enver.itcompanydemo.exception.PhoneVerificationException;
 import net.enver.itcompanydemo.model.Role;
 import net.enver.itcompanydemo.model.User;
+import net.enver.itcompanydemo.model.UserStatus;
 import net.enver.itcompanydemo.security.jwt.JwtUserDetails;
 import net.enver.itcompanydemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
@@ -27,16 +31,26 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("In JwtUserDetailsService loadUserByUsername method.");
+
         User user = userService.findByUsername(username);
-        if (user == null) {
+
+        if (user == null || user.getUserStatus() == UserStatus.DELETED) {
             throw new UsernameNotFoundException("Username: " + username + " not found");
         }
-        return new JwtUserDetails(
+
+        if (user.getUserStatus() == UserStatus.INACTIVE) {
+            throw new PhoneVerificationException("User with username: " + username + " is not verified.");
+        }
+        JwtUserDetails jwtUser = new JwtUserDetails(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getPhoneNumber(),
                 grantedAuthorities(user.getRoles()));
+
+        log.info("User with username: {} successfully loaded", username);
+        return jwtUser;
     }
 
     private Set<GrantedAuthority> grantedAuthorities(Set<Role> roles) {

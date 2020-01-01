@@ -1,5 +1,6 @@
 package net.enver.itcompanydemo.rest;
 
+import net.enver.itcompanydemo.dto.UserRegisterDto;
 import net.enver.itcompanydemo.dto.UserVerifyDto;
 import net.enver.itcompanydemo.exception.PhoneVerificationException;
 import net.enver.itcompanydemo.model.User;
@@ -40,6 +41,7 @@ public class AuthenticationRestControllerV1 {
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationUtil authenticationUtil) {
+        Map<Object, Object> response = new HashMap<>();
         try {
             String username = authenticationUtil.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, authenticationUtil.getPassword()));
@@ -51,7 +53,6 @@ public class AuthenticationRestControllerV1 {
 
             String token = jwtUtil.createToken(user);
 
-            Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
             response.put("token", token);
 
@@ -59,6 +60,32 @@ public class AuthenticationRestControllerV1 {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Username or password is incorrect.");
         }
+    }
+
+    @PostMapping("register")
+    public ResponseEntity registerUser(@RequestBody UserRegisterDto userRegisterDto) {
+        Map<Object, Object> response = new HashMap<>();
+
+        String username = userRegisterDto.getUsername();
+        String phoneNumber = userRegisterDto.getPhoneNumber();
+
+        User user = userService.findByUsername(username);
+
+        if (user != null) {
+            throw new BadCredentialsException("User with username: " + username + " already exists.");
+        }
+
+        User userExists = userService.findByPhoneNumber(phoneNumber);
+
+        if (userExists != null){
+            throw new BadCredentialsException("User with phone number: " + phoneNumber + " already exists.");
+        }
+
+        userService.register(userRegisterDto.toUser());
+
+        response.put("message", "User successfully registered.");
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("verify")

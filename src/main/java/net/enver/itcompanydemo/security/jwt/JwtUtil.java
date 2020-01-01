@@ -30,7 +30,7 @@ public class JwtUtil {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public void setJwtUtil(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
+    public void setJwtUtil(/*@Qualifier("jwtUserDetailsService") */UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
