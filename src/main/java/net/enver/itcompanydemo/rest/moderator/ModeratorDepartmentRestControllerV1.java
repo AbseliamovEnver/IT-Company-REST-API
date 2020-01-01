@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.moderator;
 
-import net.enver.itcompanydemo.dto.DepartmentDto;
+import net.enver.itcompanydemo.dto.moderator.ModeratorDepartmentDto;
 import net.enver.itcompanydemo.model.Department;
 import net.enver.itcompanydemo.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/moderator/departments/")
-public class DepartmentRestControllerV1 {
+public class ModeratorDepartmentRestControllerV1 {
 
     private final DepartmentService departmentService;
 
     @Autowired
-    public DepartmentRestControllerV1(DepartmentService departmentService) {
+    public ModeratorDepartmentRestControllerV1(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<ModeratorDepartmentDto> getDepartmentById(@PathVariable @NotNull Long id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -36,7 +36,7 @@ public class DepartmentRestControllerV1 {
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(DepartmentDto.fromDepartment(department), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorDepartmentDto.fromDepartment(department), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,12 +78,12 @@ public class DepartmentRestControllerV1 {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DepartmentDto>> getAllDepartment() {
+    public ResponseEntity<List<ModeratorDepartmentDto>> getAllDepartment() {
         List<Department> departments = this.departmentService.getAll();
 
         if (departments == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(DepartmentDto.departmentDtoList(departments), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorDepartmentDto.departmentDtoList(departments), HttpStatus.OK);
     }
 }

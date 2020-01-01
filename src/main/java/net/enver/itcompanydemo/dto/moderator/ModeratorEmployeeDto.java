@@ -1,4 +1,4 @@
-package net.enver.itcompanydemo.dto;
+package net.enver.itcompanydemo.dto.moderator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -14,6 +14,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ModeratorEmployeeDto {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private BigDecimal salary;
@@ -27,6 +28,7 @@ public class ModeratorEmployeeDto {
     public static ModeratorEmployeeDto fromEmployee(Employee employee) {
         ModeratorEmployeeDto moderatorEmployeeDto = new ModeratorEmployeeDto();
 
+        moderatorEmployeeDto.setId(employee.getId());
         moderatorEmployeeDto.setFirstName(employee.getFirstName());
         moderatorEmployeeDto.setLastName(employee.getLastName());
         moderatorEmployeeDto.setSalary(employee.getSalary());

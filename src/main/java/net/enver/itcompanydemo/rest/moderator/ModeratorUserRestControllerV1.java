@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.moderator;
 
-import net.enver.itcompanydemo.dto.UserDto;
+import net.enver.itcompanydemo.dto.moderator.ModeratorUserDto;
 import net.enver.itcompanydemo.model.User;
 import net.enver.itcompanydemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,18 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users/")
-public class UserRestControllerV1 {
+@RequestMapping("/api/v1/moderator/users/")
+public class ModeratorUserRestControllerV1 {
 
     private final UserService userService;
 
     @Autowired
-    public UserRestControllerV1(UserService userService) {
+    public ModeratorUserRestControllerV1(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> getUserById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<ModeratorUserDto> getUserById(@PathVariable Long id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -36,7 +36,7 @@ public class UserRestControllerV1 {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorUserDto.fromUser(user), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +51,8 @@ public class UserRestControllerV1 {
     }
 
     @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@PathVariable @NotNull Long id, @RequestBody @Valid User user, UriComponentsBuilder builder) {
+    public ResponseEntity<User> updateUser(@PathVariable @NotNull Long id,
+                                           @RequestBody @Valid User user, UriComponentsBuilder builder) {
         HttpHeaders headers = new HttpHeaders();
 
         if (id == null || user == null) {
@@ -61,13 +62,28 @@ public class UserRestControllerV1 {
         return new ResponseEntity<>(user, headers, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> deleteUser(@PathVariable @NotNull Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = this.userService.getById(id);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        this.userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserDto>> getAllUser() {
+    public ResponseEntity<List<ModeratorUserDto>> getAllUser() {
         List<User> users = this.userService.getAll();
 
         if (users == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(UserDto.userDtoList(users), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorUserDto.moderatorUserDtoList(users), HttpStatus.OK);
     }
 }

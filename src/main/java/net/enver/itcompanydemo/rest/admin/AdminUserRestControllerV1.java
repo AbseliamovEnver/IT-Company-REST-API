@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.admin;
 
-import net.enver.itcompanydemo.dto.AdminUserDto;
+import net.enver.itcompanydemo.dto.admin.AdminUserDto;
 import net.enver.itcompanydemo.model.User;
 import net.enver.itcompanydemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/admin/")
-public class AdminRestControllerV1 {
+@RequestMapping("/api/v1/admin/users/")
+public class AdminUserRestControllerV1 {
 
     private final UserService userService;
 
     @Autowired
-    public AdminRestControllerV1(UserService userService) {
+    public AdminUserRestControllerV1(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = "users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminUserDto> getUserById(@PathVariable("id") Long userId) {
         if (userId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -35,7 +35,7 @@ public class AdminRestControllerV1 {
         return new ResponseEntity<>(AdminUserDto.fromUser(user), HttpStatus.OK);
     }
 
-    @GetMapping(value = "users/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AdminUserDto>> getAllUser() {
         List<User> users = this.userService.getAll();
 

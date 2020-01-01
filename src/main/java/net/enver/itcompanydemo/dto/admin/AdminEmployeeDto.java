@@ -1,4 +1,4 @@
-package net.enver.itcompanydemo.dto;
+package net.enver.itcompanydemo.dto.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

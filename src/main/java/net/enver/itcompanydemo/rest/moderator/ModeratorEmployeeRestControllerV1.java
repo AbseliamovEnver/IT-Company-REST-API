@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.moderator;
 
-import net.enver.itcompanydemo.dto.EmployeeDto;
+import net.enver.itcompanydemo.dto.moderator.ModeratorEmployeeDto;
 import net.enver.itcompanydemo.model.Employee;
 import net.enver.itcompanydemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +16,27 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/employees/")
-public class EmployeeRestControllerV1 {
+@RequestMapping("/api/v1/moderator/employees/")
+public class ModeratorEmployeeRestControllerV1 {
 
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeRestControllerV1(EmployeeService employeeService) {
+    public ModeratorEmployeeRestControllerV1(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable @NotNull Long id) {
-        if (id == null) {
+    public ResponseEntity<ModeratorEmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId) {
+        if (employeeId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Employee employee = this.employeeService.getById(id);
+        Employee employee = this.employeeService.getById(employeeId);
 
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(EmployeeDto.fromEmployee(employee), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorEmployeeDto.fromEmployee(employee), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,12 +78,12 @@ public class EmployeeRestControllerV1 {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
+    public ResponseEntity<List<ModeratorEmployeeDto>> getAllEmployee() {
         List<Employee> employees = this.employeeService.getAll();
 
         if (employees == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(EmployeeDto.employeeDtoList(employees), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorEmployeeDto.moderatorEmployeeDtoList(employees), HttpStatus.OK);
     }
 }

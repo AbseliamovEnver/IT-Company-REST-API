@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.admin;
 
-import net.enver.itcompanydemo.dto.RoleDto;
+import net.enver.itcompanydemo.dto.admin.AdminRoleDto;
 import net.enver.itcompanydemo.model.Role;
 import net.enver.itcompanydemo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin/roles/")
-public class RoleRestControllerV1 {
+public class AdminRoleRestControllerV1 {
 
     private final RoleService roleService;
 
     @Autowired
-    public RoleRestControllerV1(RoleService roleService) {
+    public AdminRoleRestControllerV1(RoleService roleService) {
         this.roleService = roleService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RoleDto> getRoleById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<AdminRoleDto> getRoleById(@PathVariable @NotNull Long id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -36,7 +36,7 @@ public class RoleRestControllerV1 {
         if (role == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(RoleDto.fromRole(role), HttpStatus.OK);
+        return new ResponseEntity<>(AdminRoleDto.fromRole(role), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,12 +78,12 @@ public class RoleRestControllerV1 {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RoleDto>> getAllRoles() {
+    public ResponseEntity<List<AdminRoleDto>> getAllRoles() {
         List<Role> roles = this.roleService.getAll();
 
         if (roles == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(RoleDto.roleDtoList(roles), HttpStatus.OK);
+        return new ResponseEntity<>(AdminRoleDto.roleDtoList(roles), HttpStatus.OK);
     }
 }

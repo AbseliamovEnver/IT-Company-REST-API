@@ -1,6 +1,6 @@
-package net.enver.itcompanydemo.rest;
+package net.enver.itcompanydemo.rest.moderator;
 
-import net.enver.itcompanydemo.dto.PositionDto;
+import net.enver.itcompanydemo.dto.moderator.ModeratorPositionDto;
 import net.enver.itcompanydemo.model.Position;
 import net.enver.itcompanydemo.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/moderator/positions/")
-public class PositionRestControllerV1 {
+public class ModeratorPositionRestControllerV1 {
     private final PositionService positionService;
 
     @Autowired
-    public PositionRestControllerV1(PositionService positionService) {
+    public ModeratorPositionRestControllerV1(PositionService positionService) {
         this.positionService = positionService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PositionDto> getPositionById(@PathVariable @NotNull Long id) {
+    public ResponseEntity<ModeratorPositionDto> getPositionById(@PathVariable @NotNull Long id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -35,7 +35,7 @@ public class PositionRestControllerV1 {
         if (position == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(PositionDto.fromPosition(position), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorPositionDto.fromPosition(position), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,12 +77,12 @@ public class PositionRestControllerV1 {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PositionDto>> getAllPositions() {
+    public ResponseEntity<List<ModeratorPositionDto>> getAllPositions() {
         List<Position> positions = this.positionService.getAll();
 
         if (positions == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(PositionDto.positionDtoList(positions), HttpStatus.OK);
+        return new ResponseEntity<>(ModeratorPositionDto.positionDtoList(positions), HttpStatus.OK);
     }
 }
